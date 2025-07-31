@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - SpecialStock AI</title>
+    <meta name="csrf-token" content="">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">SpecialStock AI</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="search.html" class="nav-link">Browse</a></li>
+                <li><a href="cart.html" class="nav-link">Cart (<span class="cart-count">0</span>)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container" style="padding: 2rem 0;">
+        <h1 class="text-center mb-4">Checkout</h1>
+
+        <!-- Checkout Steps -->
+        <div class="flex justify-center mb-4">
+            <div class="flex items-center gap-4">
+                <div class="flex items-center">
+                    <div style="width: 30px; height: 30px; border-radius: 50%; background: #000; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold;">1</div>
+                    <span class="ml-2">Cart</span>
+                </div>
+                <div style="width: 20px; height: 2px; background: #000;"></div>
+                <div class="flex items-center">
+                    <div style="width: 30px; height: 30px; border-radius: 50%; background: #000; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold;">2</div>
+                    <span class="ml-2">Checkout</span>
+                </div>
+                <div style="width: 20px; height: 2px; background: #ddd;"></div>
+                <div class="flex items-center">
+                    <div style="width: 30px; height: 30px; border-radius: 50%; background: #ddd; color: #666; display: flex; align-items: center; justify-content: center; font-weight: bold;">3</div>
+                    <span class="ml-2" style="color: #666;">Complete</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty Cart State -->
+        <div id="empty-checkout" class="text-center hidden" style="padding: 3rem;">
+            <h2>Your cart is empty</h2>
+            <p>Add some items to your cart before proceeding to checkout</p>
+            <a href="search.html" class="btn btn-primary">Browse Content</a>
+        </div>
+
+        <!-- Checkout Content -->
+        <div id="checkout-content" class="hidden">
+            <div class="grid grid-2" style="gap: 3rem;">
+                <!-- Order Details -->
+                <div>
+                    <h2 class="mb-3">Order Details</h2>
+                    
+                    <!-- Order Items -->
+                    <div class="card mb-3">
+                        <div class="card-content">
+                            <h3 class="mb-3">Items in your order</h3>
+                            <div id="checkout-items">
+                                <!-- Order items will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Billing Information -->
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 class="mb-3">Billing Information</h3>
+                            <form id="billing-form">
+                                <div class="grid grid-2" style="gap: 1rem;">
+                                    <div class="form-group">
+                                        <label for="firstName" class="form-label">First Name *</label>
+                                        <input type="text" id="firstName" name="first_name" class="form-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastName" class="form-label">Last Name *</label>
+                                        <input type="text" id="lastName" name="last_name" class="form-input" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Email Address *</label>
+                                    <input type="email" id="email" name="email" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="country" class="form-label">Country *</label>
+                                    <select id="country" name="country" class="form-select" required>
+                                        <option value="">Select Country</option>
+                                        <option value="US">United States</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="GB">United Kingdom</option>
+                                        <option value="AU">Australia</option>
+                                        <option value="DE">Germany</option>
+                                        <option value="FR">France</option>
+                                        <option value="JP">Japan</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Summary -->
+                <div>
+                    <h2 class="mb-3">Payment</h2>
+                    
+                    <!-- Order Summary -->
+                    <div class="card mb-3">
+                        <div class="card-content">
+                            <h3 class="mb-3">Order Summary</h3>
+                            
+                            <div style="border-bottom: 1px solid #eee; padding-bottom: 1rem; margin-bottom: 1rem;">
+                                <div class="flex justify-between mb-2">
+                                    <span>Items (<span id="summary-item-count">0</span>):</span>
+                                    <span id="summary-subtotal">$0.00</span>
+                                </div>
+                                <div class="flex justify-between mb-2">
+                                    <span>Platform Fee (5%):</span>
+                                    <span id="summary-platform-fee">$0.00</span>
+                                </div>
+                                <div class="flex justify-between mb-2">
+                                    <span>Tax (8%):</span>
+                                    <span id="summary-tax-amount">$0.00</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between mb-3" style="font-weight: bold; font-size: 1.2rem;">
+                                <span>Total:</span>
+                                <span id="summary-total-amount">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Methods -->
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 class="mb-3">Payment Method</h3>
+                            
+                            <!-- PayPal Button Container -->
+                            <div id="paypal-button-container" style="margin-bottom: 1rem;">
+                                <!-- PayPal button will be rendered here -->
+                            </div>
+                            
+                            <div class="text-center" style="color: #666; font-size: 0.9rem;">
+                                <p>Secure payment powered by PayPal</p>
+                                <p style="margin-top: 0.5rem;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: text-bottom;">
+                                        <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"/>
+                                    </svg>
+                                    Your payment information is secure and encrypted
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                        <p>By completing your purchase, you agree to our 
+                           <a href="#" style="color: #000;">Terms of Service</a> and 
+                           <a href="#" style="color: #000;">Privacy Policy</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success State -->
+        <div id="checkout-success" class="text-center hidden" style="padding: 3rem;">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="green" style="margin-bottom: 1rem;">
+                <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M11,16.5L18,9.5L16.59,8.09L11,13.67L7.91,10.59L6.5,12L11,16.5Z"/>
+            </svg>
+            <h2>Payment Successful!</h2>
+            <p>Thank you for your purchase. You can now download your content.</p>
+            <div class="flex gap-2 justify-center mt-3">
+                <a href="downloads.html" class="btn btn-primary">View Downloads</a>
+                <a href="search.html" class="btn btn-outline">Continue Shopping</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="checkout.js"></script>
+</body>
+</html>

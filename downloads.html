@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Downloads - SpecialStock AI</title>
+    <meta name="csrf-token" content="">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">SpecialStock AI</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="search.html" class="nav-link">Browse</a></li>
+                <li><a href="downloads.html" class="nav-link">My Downloads</a></li>
+                <li><a href="profile.html" class="nav-link" id="user-name">Profile</a></li>
+                <li><button id="logout-btn" class="nav-link" style="background: none; border: none; cursor: pointer;">Logout</button></li>
+                <li><a href="cart.html" class="nav-link">Cart (<span class="cart-count">0</span>)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container" style="padding: 2rem 0;">
+        <h1 class="text-center mb-4">My Downloads</h1>
+
+        <!-- Loading State -->
+        <div id="loading-state" class="text-center" style="padding: 3rem;">
+            <div class="spinner" style="margin: 0 auto;"></div>
+            <p>Loading your downloads...</p>
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-downloads" class="text-center hidden" style="padding: 3rem;">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="#ccc" style="margin-bottom: 1rem;">
+                <path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/>
+            </svg>
+            <h2>No downloads yet</h2>
+            <p>Start browsing our collection to find content you love</p>
+            <a href="search.html" class="btn btn-primary">Browse Content</a>
+        </div>
+
+        <!-- Downloads Content -->
+        <div id="downloads-content" class="hidden">
+            <!-- Filter and Sort -->
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex gap-2">
+                    <select id="type-filter" class="form-select" style="width: auto;">
+                        <option value="">All Types</option>
+                        <option value="image">Images</option>
+                        <option value="video">Videos</option>
+                    </select>
+                    <select id="sort-filter" class="form-select" style="width: auto;">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="title">Title A-Z</option>
+                    </select>
+                </div>
+                <div>
+                    <span id="download-count" style="color: #666;">0 items</span>
+                </div>
+            </div>
+
+            <!-- Downloads Grid -->
+            <div class="grid grid-3" id="downloads-grid">
+                <!-- Downloads will be loaded here -->
+            </div>
+
+            <!-- Download History -->
+            <section style="margin-top: 3rem;">
+                <h2 class="mb-3">Download History</h2>
+                <div class="card">
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #f8f8f8;">
+                                    <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">Content</th>
+                                    <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">Type</th>
+                                    <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">Downloaded</th>
+                                    <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">Times</th>
+                                    <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="download-history">
+                                <!-- History will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Download Modal -->
+    <div id="download-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('download-modal')">&times;</button>
+            <h2 class="mb-3">Download Options</h2>
+            <div id="download-options">
+                <!-- Download options will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- License Modal -->
+    <div id="license-modal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <button class="modal-close" onclick="closeModal('license-modal')">&times;</button>
+            <h2 class="mb-3">License Information</h2>
+            <div id="license-content">
+                <h3>Standard License</h3>
+                <p>This license grants you the right to:</p>
+                <ul style="margin: 1rem 0; padding-left: 2rem;">
+                    <li>Use the content for personal and commercial projects</li>
+                    <li>Modify and adapt the content as needed</li>
+                    <li>Use in unlimited projects</li>
+                </ul>
+                <p>You cannot:</p>
+                <ul style="margin: 1rem 0; padding-left: 2rem;">
+                    <li>Resell or redistribute the original content</li>
+                    <li>Use for pornographic, defamatory, or illegal purposes</li>
+                    <li>Claim ownership of the original content</li>
+                </ul>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                    For questions about licensing, please contact our support team.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="downloads.js"></script>
+</body>
+</html>

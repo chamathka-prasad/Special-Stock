@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpecialStock AI - Premium Stock Media Platform</title>
+    <meta name="description" content="Discover and purchase high-quality stock photos, videos, and media from talented creators worldwide.">
+    <meta name="csrf-token" content="">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">SpecialStock AI</a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="search.html" class="nav-link">Browse</a></li>
+                <li class="nav-item-user hidden" id="nav-seller"><a href="upload.html" class="nav-link">Upload</a></li>
+                <li class="nav-item-user hidden" id="nav-dashboard">
+                    <a href="#" class="nav-link" id="dashboard-link">Dashboard</a>
+                </li>
+                <li class="nav-item-guest" id="nav-login"><a href="login.html" class="nav-link">Login</a></li>
+                <li class="nav-item-guest" id="nav-register"><a href="register.html" class="nav-link">Register</a></li>
+                <li class="nav-item-user hidden" id="nav-profile">
+                    <a href="profile.html" class="nav-link" id="user-name"></a>
+                </li>
+                <li class="nav-item-user hidden">
+                    <button id="logout-btn" class="nav-link" style="background: none; border: none; cursor: pointer;">Logout</button>
+                </li>
+                <li>
+                    <a href="cart.html" class="nav-link">
+                        Cart (<span class="cart-count">0</span>)
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" style="background: linear-gradient(135deg, #000 0%, #333 100%); color: white; padding: 4rem 0; text-align: center;">
+            <div class="container">
+                <h1 style="font-size: 3rem; margin-bottom: 1rem; font-weight: bold;">Premium Stock Media</h1>
+                <p style="font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.9;">Discover millions of high-quality photos, videos, and digital assets</p>
+                
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <form id="hero-search-form">
+                        <input type="text" 
+                               id="hero-search" 
+                               name="query" 
+                               class="search-input" 
+                               placeholder="Search for photos, videos, and more..."
+                               style="color: black;">
+                        <button type="submit" class="search-button">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Categories -->
+        <section class="container" style="padding: 3rem 0;">
+            <h2 class="text-center mb-4" style="font-size: 2rem; font-weight: bold;">Popular Categories</h2>
+            <div class="grid grid-4" id="categories-grid">
+                <div class="card">
+                    <div style="height: 150px; background: linear-gradient(45deg, #f0f0f0, #e0e0e0); display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 2rem;">📸</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Business</h3>
+                        <p class="card-description">Professional business imagery</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div style="height: 150px; background: linear-gradient(45deg, #f0f0f0, #e0e0e0); display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 2rem;">💻</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Technology</h3>
+                        <p class="card-description">Tech and innovation focused</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div style="height: 150px; background: linear-gradient(45deg, #f0f0f0, #e0e0e0); display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 2rem;">🌿</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Nature</h3>
+                        <p class="card-description">Beautiful natural landscapes</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div style="height: 150px; background: linear-gradient(45deg, #f0f0f0, #e0e0e0); display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 2rem;">👥</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">People</h3>
+                        <p class="card-description">Lifestyle and portrait photography</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Content -->
+        <section class="container" style="padding: 3rem 0;">
+            <div class="flex justify-between items-center mb-4">
+                <h2 style="font-size: 2rem; font-weight: bold;">Latest Uploads</h2>
+                <a href="search.html" class="btn btn-outline">View All</a>
+            </div>
+            <div class="grid grid-4" id="recent-content">
+                <!-- Content will be loaded dynamically -->
+                <div class="text-center" style="grid-column: 1 / -1; padding: 2rem;">
+                    <div class="spinner" style="margin: 0 auto;"></div>
+                    <p>Loading latest content...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics -->
+        <section style="background: #f8f8f8; padding: 3rem 0;">
+            <div class="container">
+                <h2 class="text-center mb-4" style="font-size: 2rem; font-weight: bold;">Platform Statistics</h2>
+                <div class="grid grid-4" id="stats-grid">
+                    <div class="text-center">
+                        <div style="font-size: 2.5rem; font-weight: bold; color: #000;" id="total-images">-</div>
+                        <p>Images</p>
+                    </div>
+                    <div class="text-center">
+                        <div style="font-size: 2.5rem; font-weight: bold; color: #000;" id="total-videos">-</div>
+                        <p>Videos</p>
+                    </div>
+                    <div class="text-center">
+                        <div style="font-size: 2.5rem; font-weight: bold; color: #000;" id="total-contributors">-</div>
+                        <p>Contributors</p>
+                    </div>
+                    <div class="text-center">
+                        <div style="font-size: 2.5rem; font-weight: bold; color: #000;" id="total-downloads">-</div>
+                        <p>Downloads</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="container text-center" style="padding: 3rem 0;">
+            <h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 1rem;">Ready to Get Started?</h2>
+            <p style="font-size: 1.125rem; margin-bottom: 2rem; color: #666;">Join thousands of creators and buyers on our platform</p>
+            <div class="flex gap-4 justify-center">
+                <a href="register.html" class="btn btn-primary">Start Buying</a>
+                <a href="register.html" class="btn btn-secondary">Start Selling</a>
+            </div>
+        </section>
+    </main>
+
+    <footer style="background: #000; color: white; padding: 2rem 0; text-align: center;">
+        <div class="container">
+            <div class="grid grid-3" style="margin-bottom: 2rem;">
+                <div>
+                    <h3 style="margin-bottom: 1rem;">Company</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="#" style="color: white; text-decoration: none;">About Us</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">Contact</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem;">Legal</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="#" style="color: white; text-decoration: none;">Terms of Service</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">Privacy Policy</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">License</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem;">Support</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="#" style="color: white; text-decoration: none;">Help Center</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">API</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="border-top: 1px solid #333; padding-top: 1rem;">
+                <p>&copy; 2025 SpecialStock AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

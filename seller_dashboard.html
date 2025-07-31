@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard - SpecialStock AI</title>
+    <meta name="csrf-token" content="">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">SpecialStock AI</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="search.html" class="nav-link">Browse</a></li>
+                <li><a href="upload.html" class="nav-link">Upload</a></li>
+                <li><a href="seller_dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="profile.html" class="nav-link" id="user-name">Profile</a></li>
+                <li><button id="logout-btn" class="nav-link" style="background: none; border: none; cursor: pointer;">Logout</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container" style="padding: 2rem 0;">
+        <h1 class="text-center mb-4">Seller Dashboard</h1>
+
+        <!-- Statistics Overview -->
+        <section class="mb-4">
+            <div class="grid grid-4" id="seller-stats">
+                <div class="card">
+                    <div class="card-content text-center">
+                        <h3 style="font-size: 2rem; margin-bottom: 0.5rem;" id="total-uploads">-</h3>
+                        <p>Total Uploads</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content text-center">
+                        <h3 style="font-size: 2rem; margin-bottom: 0.5rem;" id="approved-uploads">-</h3>
+                        <p>Approved</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content text-center">
+                        <h3 style="font-size: 2rem; margin-bottom: 0.5rem;" id="total-downloads">-</h3>
+                        <p>Total Downloads</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content text-center">
+                        <h3 style="font-size: 2rem; margin-bottom: 0.5rem;" id="total-earnings">-</h3>
+                        <p>Total Earnings</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="mb-4">
+            <div class="flex gap-4 justify-center">
+                <a href="upload.html" class="btn btn-primary">Upload New Content</a>
+                <button id="export-earnings-btn" class="btn btn-outline">Export Earnings</button>
+            </div>
+        </section>
+
+        <!-- My Content -->
+        <section>
+            <div class="flex justify-between items-center mb-3">
+                <h2>My Content</h2>
+                <select id="status-filter" class="form-select" style="width: auto;">
+                    <option value="all">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+            </div>
+
+            <div id="my-content">
+                <div class="text-center" style="padding: 2rem;">
+                    <div class="spinner" style="margin: 0 auto;"></div>
+                    <p>Loading your content...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="seller_dashboard.js"></script>
+</body>
+</html>

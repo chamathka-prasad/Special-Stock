@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SpecialStock AI</title>
+    <meta name="csrf-token" content="">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">SpecialStock AI</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="admin_dashboard.html" class="nav-link">Admin Panel</a></li>
+                <li><a href="profile.html" class="nav-link" id="user-name">Admin</a></li>
+                <li><button id="logout-btn" class="nav-link" style="background: none; border: none; cursor: pointer;">Logout</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container" style="padding: 2rem 0;">
+        <h1 class="text-center mb-4">Admin Dashboard</h1>
+
+        <!-- Statistics Overview -->
+        <section class="mb-4">
+            <h2 style="margin-bottom: 1rem;">Platform Overview</h2>
+            <div class="grid grid-4" id="admin-stats">
+                <div class="card">
+                    <div class="card-content text-center">
+                        <h3 style="font-size: 2rem; margin-bottom: 0.5rem;" id="pending-count">-</h3>
+                        <p>Pending Approval</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content text-center">
+                        <h3 style="font-size: 2rem; margin-bottom: 0.5rem;" id="approved-count">-</h3>
+                        <p>Approved Content</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content text-center">
+                        <h3 style="font-size: 2rem; margin-bottom: 0.5rem;" id="users-count">-</h3>
+                        <p>Total Users</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content text-center">
+                        <h3 style="font-size: 2rem; margin-bottom: 0.5rem;" id="revenue-count">-</h3>
+                        <p>Total Revenue</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Approval Section -->
+        <section class="mb-4">
+            <div class="flex justify-between items-center mb-3">
+                <h2>Content Approval Queue</h2>
+                <div class="flex gap-2">
+                    <select id="status-filter" class="form-select" style="width: auto;">
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                        <option value="all">All</option>
+                    </select>
+                    <button id="refresh-btn" class="btn btn-outline">Refresh</button>
+                </div>
+            </div>
+
+            <div id="content-queue">
+                <div class="text-center" style="padding: 2rem;">
+                    <div class="spinner" style="margin: 0 auto;"></div>
+                    <p>Loading content...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- User Management Section -->
+        <section class="mb-4">
+            <div class="flex justify-between items-center mb-3">
+                <h2>User Management</h2>
+                <button id="export-users-btn" class="btn btn-outline">Export Users</button>
+            </div>
+
+            <div class="card">
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f8f8f8;">
+                                <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">ID</th>
+                                <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">Name</th>
+                                <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">Email</th>
+                                <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">Role</th>
+                                <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">Status</th>
+                                <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">Joined</th>
+                                <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table">
+                            <tr>
+                                <td colspan="7" style="padding: 2rem; text-align: center;">Loading users...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Transactions -->
+        <section>
+            <h2 class="mb-3">Recent Transactions</h2>
+            <div class="card">
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f8f8f8;">
+                                <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">ID</th>
+                                <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">Buyer</th>
+                                <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">Content</th>
+                                <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">Amount</th>
+                                <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">Status</th>
+                                <th style="padding: 1rem; text-align: left; border-bottom: 1px solid #ddd;">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactions-table">
+                            <tr>
+                                <td colspan="6" style="padding: 2rem; text-align: center;">Loading transactions...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Content Review Modal -->
+    <div id="review-modal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <button class="modal-close" onclick="closeModal('review-modal')">&times;</button>
+            <h2 class="mb-3">Review Content</h2>
+            
+            <div id="modal-content">
+                <!-- Content details will be loaded here -->
+            </div>
+            
+            <div class="flex gap-2 justify-center mt-4">
+                <button id="approve-btn" class="btn btn-primary">Approve</button>
+                <button id="reject-btn" class="btn btn-secondary">Reject</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rejection Reason Modal -->
+    <div id="rejection-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('rejection-modal')">&times;</button>
+            <h2 class="mb-3">Rejection Reason</h2>
+            
+            <form id="rejection-form">
+                <div class="form-group">
+                    <label for="rejection-reason" class="form-label">Reason for rejection:</label>
+                    <textarea id="rejection-reason" name="reason" class="form-textarea" required></textarea>
+                </div>
+                
+                <div class="flex gap-2 justify-center">
+                    <button type="submit" class="btn btn-primary">Submit Rejection</button>
+                    <button type="button" class="btn btn-outline" onclick="closeModal('rejection-modal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="admin_dashboard.js"></script>
+</body>
+</html>

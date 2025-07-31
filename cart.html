@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - SpecialStock AI</title>
+    <meta name="csrf-token" content="">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">SpecialStock AI</a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="search.html" class="nav-link">Browse</a></li>
+                <li class="nav-item-user hidden"><a href="upload.html" class="nav-link">Upload</a></li>
+                <li class="nav-item-user hidden"><a href="#" class="nav-link" id="dashboard-link">Dashboard</a></li>
+                <li class="nav-item-guest"><a href="login.html" class="nav-link">Login</a></li>
+                <li class="nav-item-guest"><a href="register.html" class="nav-link">Register</a></li>
+                <li class="nav-item-user hidden"><a href="profile.html" class="nav-link" id="user-name">Profile</a></li>
+                <li class="nav-item-user hidden"><button id="logout-btn" class="nav-link" style="background: none; border: none; cursor: pointer;">Logout</button></li>
+                <li><a href="cart.html" class="nav-link">Cart (<span class="cart-count">0</span>)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container" style="padding: 2rem 0;">
+        <h1 class="text-center mb-4">Shopping Cart</h1>
+
+        <!-- Empty Cart State -->
+        <div id="empty-cart" class="text-center hidden" style="padding: 3rem;">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="#ccc" style="margin-bottom: 1rem;">
+                <path d="M19,7H15V6A3,3 0 0,0 12,3A3,3 0 0,0 9,6V7H5A1,1 0 0,0 4,8V19A3,3 0 0,0 7,22H17A3,3 0 0,0 20,19V8A1,1 0 0,0 19,7M9,6A1,1 0 0,1 10,5H14A1,1 0 0,1 15,6V7H9V6M18,19A1,1 0 0,1 17,20H7A1,1 0 0,1 6,19V9H8V10A1,1 0 0,0 9,11A1,1 0 0,0 10,10V9H14V10A1,1 0 0,0 15,11A1,1 0 0,0 16,10V9H18V19Z"/>
+            </svg>
+            <h2>Your cart is empty</h2>
+            <p>Browse our collection and add items to your cart</p>
+            <a href="search.html" class="btn btn-primary">Browse Content</a>
+        </div>
+
+        <!-- Cart Items -->
+        <div id="cart-content" class="hidden">
+            <div class="grid grid-2" style="gap: 3rem;">
+                <!-- Cart Items List -->
+                <div>
+                    <h2 class="mb-3">Cart Items</h2>
+                    <div id="cart-items">
+                        <!-- Cart items will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div>
+                    <div class="card" style="position: sticky; top: 2rem;">
+                        <div class="card-content">
+                            <h3 class="mb-3">Order Summary</h3>
+                            
+                            <div style="border-bottom: 1px solid #eee; padding-bottom: 1rem; margin-bottom: 1rem;">
+                                <div class="flex justify-between mb-2">
+                                    <span>Items (<span id="item-count">0</span>):</span>
+                                    <span id="subtotal">$0.00</span>
+                                </div>
+                                <div class="flex justify-between mb-2">
+                                    <span>Platform Fee:</span>
+                                    <span id="platform-fee">$0.00</span>
+                                </div>
+                                <div class="flex justify-between mb-2">
+                                    <span>Tax:</span>
+                                    <span id="tax-amount">$0.00</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between mb-3" style="font-weight: bold; font-size: 1.1rem;">
+                                <span>Total:</span>
+                                <span id="total-amount">$0.00</span>
+                            </div>
+                            
+                            <button id="checkout-btn" class="btn btn-primary w-full" style="padding: 1rem;">
+                                Proceed to Checkout
+                            </button>
+                            
+                            <div class="text-center mt-3">
+                                <a href="search.html" style="color: #666; text-decoration: none;">Continue Shopping</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Methods -->
+                    <div class="card mt-3">
+                        <div class="card-content">
+                            <h4 class="mb-2">We Accept</h4>
+                            <div class="flex gap-2" style="align-items: center;">
+                                <div style="padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; background: white;">
+                                    <strong>PayPal</strong>
+                                </div>
+                                <div style="padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; background: white;">
+                                    <strong>Visa</strong>
+                                </div>
+                                <div style="padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; background: white;">
+                                    <strong>MC</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Content -->
+        <section id="related-section" class="hidden" style="margin-top: 4rem;">
+            <h2 class="mb-3">You might also like</h2>
+            <div class="grid grid-4" id="recommended-content">
+                <!-- Recommended content will be loaded here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Remove Item Modal -->
+    <div id="remove-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('remove-modal')">&times;</button>
+            <h2 class="mb-3">Remove Item</h2>
+            <p>Are you sure you want to remove this item from your cart?</p>
+            <div class="flex gap-2 justify-center mt-4">
+                <button id="confirm-remove-btn" class="btn btn-primary">Remove</button>
+                <button class="btn btn-outline" onclick="closeModal('remove-modal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="cart.js"></script>
+</body>
+</html>

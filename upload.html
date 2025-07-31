@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Content - SpecialStock AI</title>
+    <meta name="csrf-token" content="">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">SpecialStock AI</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="search.html" class="nav-link">Browse</a></li>
+                <li><a href="upload.html" class="nav-link">Upload</a></li>
+                <li><a href="seller_dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="profile.html" class="nav-link" id="user-name">Profile</a></li>
+                <li><button id="logout-btn" class="nav-link" style="background: none; border: none; cursor: pointer;">Logout</button></li>
+                <li><a href="cart.html" class="nav-link">Cart (<span class="cart-count">0</span>)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container" style="padding: 2rem 0;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h1 class="text-center mb-4">Upload Your Content</h1>
+            <p class="text-center mb-4" style="color: #666;">Share your creative work with the world</p>
+
+            <form id="uploadForm" enctype="multipart/form-data">
+                <!-- File Upload Section -->
+                <div class="form-group">
+                    <label for="fileInput" class="form-label">Select File *</label>
+                    <div id="upload-area" style="border: 2px dashed #ccc; padding: 2rem; text-align: center; border-radius: 8px; cursor: pointer; transition: border-color 0.3s;">
+                        <input type="file" id="fileInput" name="file" accept="image/*,video/*" style="display: none;" required>
+                        <div id="upload-placeholder">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="#ccc" style="margin-bottom: 1rem;">
+                                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                            </svg>
+                            <p><strong>Click to upload</strong> or drag and drop</p>
+                            <p style="color: #666; font-size: 0.9rem;">Supported formats: JPG, PNG, WebP, MP4, AVI, MOV (max 50MB)</p>
+                        </div>
+                        <div id="upload-preview" class="hidden">
+                            <img id="preview-image" src="" alt="Preview" style="max-width: 200px; max-height: 200px; border-radius: 4px;">
+                            <video id="preview-video" controls style="max-width: 200px; max-height: 200px; border-radius: 4px;" class="hidden"></video>
+                            <p id="file-info" style="margin-top: 1rem; color: #666;"></p>
+                        </div>
+                    </div>
+                    <div id="upload-progress" class="hidden" style="margin-top: 1rem;">
+                        <div style="background: #f0f0f0; border-radius: 4px; overflow: hidden;">
+                            <div id="progress-bar" style="height: 8px; background: #000; width: 0%; transition: width 0.3s;"></div>
+                        </div>
+                        <p id="progress-text" style="margin-top: 0.5rem; text-align: center;">Uploading...</p>
+                    </div>
+                </div>
+
+                <!-- Content Details -->
+                <div class="form-group">
+                    <label for="title" class="form-label">Title *</label>
+                    <input type="text" id="title" name="title" class="form-input" maxlength="255" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea id="description" name="description" class="form-textarea" maxlength="1000" placeholder="Describe your content, its story, or how it can be used..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="tags" class="form-label">Tags</label>
+                    <input type="text" id="tags" name="tags" class="form-input" placeholder="business, technology, nature (comma-separated)">
+                    <small style="color: #666;">Add relevant tags to help users find your content</small>
+                </div>
+
+                <!-- Pricing -->
+                <div class="form-group">
+                    <label class="form-label">Pricing *</label>
+                    <div style="display: flex; gap: 1rem; align-items: center; margin-top: 0.5rem;">
+                        <label class="flex items-center gap-2">
+                            <input type="radio" name="pricing_type" value="free" id="pricing-free" checked>
+                            Free
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="radio" name="pricing_type" value="paid" id="pricing-paid">
+                            Paid
+                        </label>
+                    </div>
+                </div>
+
+                <div id="price-input-group" class="form-group hidden">
+                    <label for="price" class="form-label">Price (USD) *</label>
+                    <div style="position: relative;">
+                        <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #666;">$</span>
+                        <input type="number" id="price" name="price" class="form-input" style="padding-left: 2rem;" min="0.01" step="0.01" max="999.99">
+                    </div>
+                </div>
+
+                <!-- License and Rights -->
+                <div class="form-group">
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" id="rights" name="rights" required>
+                        I own the rights to this content and grant SpecialStock AI the right to distribute it
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" id="model-release" name="model_release">
+                        Model release obtained (if applicable)
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" id="property-release" name="property_release">
+                        Property release obtained (if applicable)
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" id="submit-btn" class="btn btn-primary" style="padding: 1rem 2rem;">
+                        Upload Content
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="upload.js"></script>
+</body>
+</html>
